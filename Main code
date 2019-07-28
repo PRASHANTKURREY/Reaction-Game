@@ -1,0 +1,50 @@
+int a =8;
+int b=3;int i;
+int Input_data;
+
+int random_time;
+int response_time;
+#include <LiquidCrystal.h>
+
+// initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+const int rs = 7, en = 11, d4 = 6, d5 = 4, d6 = 9, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {// set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("Response time");
+  pinMode(a,OUTPUT);    
+ //digitalWrite(a,HIGH);
+pinMode(b,INPUT);                                   //input
+Serial.begin(9600);
+randomSeed(analogRead(0));
+random_time=random(3000,8000);
+attachInterrupt(digitalPinToInterrupt(3),pressed,CHANGE);
+delay(random_time);
+Serial.flush();
+//Serial.println("rand_time");
+Serial.println(random_time);
+digitalWrite(a,HIGH);
+Serial
+ 
+}
+void loop(){;  // (note: line 1 is the second row, since counting begins with 0):
+ // lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+ // lcd.print((random_time) / 1000);
+
+}
+
+void pressed() 
+{
+response_time = (millis());
+response_time-=random_time;
+lcd.setCursor(0, 1);
+ lcd.print(response_time);
+Serial.println(response_time / 1000);
+Serial.flush();
+digitalWrite(a,LOW);
+exit(0);
+}
